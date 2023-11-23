@@ -10,7 +10,16 @@ import os
 import socket
 import base64
 
-from collections import Iterable, Mapping
+try:
+    from collections import Iterable, Mapping
+except ImportError:
+    # Ugly hack for APNS sub-deps Python 3.10+
+    from collections.abc import Iterable, Mapping, MutableSet, MutableMapping
+    import collections
+    collections.Iterable = Iterable
+    collections.Mapping = Mapping
+    collections.MutableSet = MutableSet
+    collections.MutableMapping = MutableMapping
 
 import collections
 from hyperframe.frame import SettingsFrame
